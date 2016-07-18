@@ -2,7 +2,7 @@
 
 namespace Entities
 {
-    public class Book : IEquatable<Book>, IComparable<Book>
+    public class Book : IEquatable<Book>, IComparable<Book>, IComparable
     {
         public string Author { get; }
         public string Title { get; }
@@ -64,6 +64,21 @@ namespace Entities
         public override int GetHashCode()
         {
             return ToString().GetHashCode();
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+            {
+                return 1;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                throw new ArgumentException("Argument must be Book");
+            }
+            Book book = (Book)obj;
+            return CompareTo(book);
         }
 
         public override string ToString()
